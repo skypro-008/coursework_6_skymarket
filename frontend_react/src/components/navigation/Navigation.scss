@@ -1,6 +1,7 @@
 .navigation {
   display: flex;
   list-style: none;
+  margin-right: 32px;
   @media screen and(max-width: 999px) {
     flex-direction: column;
     flex-grow: 1;

@@ -1,8 +1,4 @@
 .button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   background-color: #f76343;
   box-shadow: 4px 8px 16px rgba(0, 27, 111, 0.2);
   border-radius: 20px;
@@ -15,6 +11,13 @@
     align-self: center;
     margin: 140px auto 40px auto;
   }
+}
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .button-link {
