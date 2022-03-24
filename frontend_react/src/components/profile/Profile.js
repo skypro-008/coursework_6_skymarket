@@ -1,14 +1,13 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-import MainContext from "../../context/MainContext";
+//import MainContext from "../../context/MainContext";
 import UserForm from "../userForm/UserForm";
 import useFormValidation from "../../utils/hooks/useFormValidation";
 
-function Profile({ user}) {
+function Profile({ userInfo, setUserInfo}) {
   const [input, setInput] = useState("");
   const { values, handleChange, errors, isValid } = useFormValidation();
   let {authTokens} = useContext(AuthContext)
-  let { userInfo, setUserInfo } = useContext(MainContext);
 
   function handleChangeInput(e) {
     handleChange(e);
@@ -16,7 +15,6 @@ function Profile({ user}) {
       setInput("");
     }
   }
-
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     let response = await fetch("http://127.0.0.1:8000/users/me/", {
@@ -26,9 +24,9 @@ function Profile({ user}) {
         Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
-        first_name: e.target.first_name.value,
-        last_name: e.target.last_name.value,
-        phone: e.target.phone.value,
+        first_name: e.target.first_name.values,
+        last_name: e.target.last_name.values,
+        phone: e.target.phone.values,
       }),
     });
 
@@ -47,11 +45,13 @@ function Profile({ user}) {
       console.log("error!");
     }
   };
+
+  console.log(userInfo)
   
   return (
     <UserForm
       title="Привет,"
-      userName={user.first_name || ""}
+      userName={userInfo.first_name}
       onSubmit={handleUpdateUser}
       buttonText="Сохранить"
       errors={!isValid}
@@ -62,7 +62,7 @@ function Profile({ user}) {
           <h2 className="userForm__subtitle">Имя</h2>
           <input
             value={values.first_name || ""}
-            placeholder={user.first_name}
+            placeholder={userInfo.first_name}
             title="Имя"
             name="first_name"
             type="text"
@@ -84,7 +84,7 @@ function Profile({ user}) {
           <h2 className="userForm__subtitle">Фамилия</h2>
           <input
             value={values.last_name || ""}
-            placeholder={user.last_name}
+            placeholder={userInfo.last_name}
             title="Фамилия"
             name="last_name"
             type="text"
@@ -107,7 +107,7 @@ function Profile({ user}) {
         <h2 className="userForm__subtitle">Телефон</h2>
         <input
           value={values.phone || ""}
-          placeholder={user.phone}
+          placeholder={userInfo.phone}
           title="Телефон"
           type="tel"
           name="phone"

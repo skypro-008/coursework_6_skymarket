@@ -4,20 +4,23 @@ import useFormValidation from "../../utils/hooks/useFormValidation";
 
 function EmailLink() {
   const [email, setEmail] = useState("");
-  const { errors } = useFormValidation();
+  const { values, handleChange, errors, isValid } = useFormValidation();
   const history = useHistory();
 
-  const handleChange = (e) => {
-    setEmail(e.target.value);
+  const handleChangeEmail = (e) => {
+    handleChange(e);
+    if (email.length > 0) {
+      setEmail("");
+    }
   };
 
-  function heandlerSubmit() {
+  function heandlerSubmit(e) {
+    e.preventDefault();
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify({
-      email: email,
+      email: values.email,
     });
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -28,7 +31,7 @@ function EmailLink() {
       .then(() => history.push("/sign-in"))
       .catch((error) => console.log("error", error));
   }
-
+  console.log(values.email);
   return (
     <main className="LinkForm">
       <form className="LinkForm__form">
@@ -37,11 +40,12 @@ function EmailLink() {
           <input
             className="LinkForm__input"
             required
-            value={email || ""}
+            value={email.values}
+            placeholder="введите ваш e-mail"
             name="email"
             type="email"
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-            onChange={handleChange}
+            onChange={handleChangeEmail}
           />
           <div
             className={`LinkForm__inputHidden ${
@@ -52,7 +56,13 @@ function EmailLink() {
           </div>
         </label>
       </form>
-      <button className="LinkForm__button " onClick={heandlerSubmit}>
+      <button
+        className={`LinkForm__button ${
+          !isValid ? "Comment__button_disabled" : ""
+        }`}
+        disabled={!isValid}
+        onClick={heandlerSubmit}
+      >
         Отправить
       </button>
       <div className="LinkForm__inputHidden LinkForm__inputError"></div>
