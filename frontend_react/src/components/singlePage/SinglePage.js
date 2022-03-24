@@ -20,9 +20,9 @@ function SinglePage() {
 
   useEffect(() => {
     setTimeout(() => {
-      Promise.all([getComments(), getProduct()])
-    }, 700)
-  }, []);
+      Promise.all([getComments(), getProduct()]);
+    }, 700);
+  }, [user]);
 
   const getProduct = async () => {
     const response = await api.get(`/ads/${id}/`);
@@ -77,7 +77,6 @@ function SinglePage() {
       console.log("error!");
     }
   };
-
   return (
     <main className="cardInformation">
       {product && (
@@ -86,8 +85,8 @@ function SinglePage() {
           <div className="cardInformation__container">
             {user.user_id !== product.author_id ? null : (
               <Buttons
-              user={user}
-              product={product}
+                user={user}
+                product={product}
                 onOpen={handleOpenEditPopup}
                 className="buttons"
                 classButton="buttons-item"
@@ -105,6 +104,7 @@ function SinglePage() {
             )}
             <div className="cardInformation__box">
               <p className="cardInformation__price">{product.price} &#8381;</p>
+
               <p className="cardInformation__description">
                 {product.description}
               </p>
