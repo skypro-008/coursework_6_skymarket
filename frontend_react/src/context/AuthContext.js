@@ -41,12 +41,16 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       history.push("/");
       window.location.reload();
+    } else if (response.status === 500) {
+      console.log("Неполадки на сервере");
+    } else if (response.status === 401) {
+      console.log("введен неккоректный email или пароль");
     } else {
-      alert("Something went wrong!");
+      console.log(response.status);
     }
   };
   //registration
-  let register = async (e) => {
+  const register = async (e) => {
     e.preventDefault();
     let response = await fetch("http://127.0.0.1:8000/users/", {
       method: "POST",
@@ -64,8 +68,10 @@ export const AuthProvider = ({ children }) => {
 
     if (response.status === 201) {
       history.push("/sign-in");
+    } else if (response.status === 500) {
+      console.log("Неполадки на сервере");
     } else {
-      alert("Something went wrong!");
+      console.log(response.status);
     }
   };
 
