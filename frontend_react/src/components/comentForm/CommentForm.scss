@@ -1,45 +1,43 @@
-.Comment__form {
+.comment__form {
   @include flexColumn;
   margin-top: 8px;
 }
 
-.Comment__label {
+.comment-label {
   @include label();
   margin: 0;
 }
 
-.Comment__form-title {
+.comment__form-title {
   @include inputTitle();
 }
 
-.Comment__input {
+.comment__input {
   @include input();
-  width: 100%;
+  background-color: #f9f9f9;
+  color: #000;
   margin: 0 auto;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
 }
 
-.Comment__input-hidden {
+.input-hidden {
   @include inputHidden();
 }
 
-.Comment__input-error {
+.input-error {
   @include inputError;
 }
 
-.Comment__button {
+.comment__button {
   @include buttonSubmit();
   background-color: #fff;
   align-self: flex-end;
 }
 
-.Comment__button-text {
+.comment__button-text {
   @include buttonText();
   color: #6464b9;
 }
 
-.Comment__button_disabled {
+.comment__button_disabled {
   @include buttonDisabled();
 }

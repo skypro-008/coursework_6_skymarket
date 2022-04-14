@@ -1,11 +1,11 @@
-.Cards {
+.cards {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 70px 0 80px 0;
+  padding: 52px 0 40px 0;
 }
 
-.Cards__container {
+.cards__container {
   width: 100%;
   list-style: none;
   display: grid;
@@ -44,11 +44,11 @@
   }
 }
 
-.Cards__container-profile {
+.cards__container-profile {
   padding: 0;
 }
 
-.Cards__link {
+.cards__link {
   text-decoration: none;
   color: inherit;
 }

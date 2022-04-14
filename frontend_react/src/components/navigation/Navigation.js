@@ -25,17 +25,6 @@ function Navigation({ onClose, user }) {
           <h2 className="navigation__text">Профиль</h2>
         </li>
       </NavLink>
-      <NavLink
-        to="/newAd"
-        className={`navigation__link ${
-          location === "/newAd" ? "activeLink" : null
-        }`}
-        onClick={onClose}
-      >
-        <li>
-          <h2 className="navigation__text">Добавить товар</h2>
-        </li>
-      </NavLink>
     </ul>
   );
 }

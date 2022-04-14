@@ -2,11 +2,8 @@ import React from "react";
 
 function Preloader() {
   return (
-    <div class="Preloader-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className="container">
+      <div className="loader"></div>
     </div>
   );
 }

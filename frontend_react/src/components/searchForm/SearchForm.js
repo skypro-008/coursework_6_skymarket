@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import MediaQuery from "react-responsive";
 
-function SearchForm({ ad, setAd, onChange }) {
+function SearchForm({ ad, setAd }) {
   const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
   function handleChangeProduct(e) {
@@ -14,74 +13,22 @@ function SearchForm({ ad, setAd, onChange }) {
       return setValidationErrors("");
     }
   }
-
-  function onFilter() {
-    onChange(ad)
-  }
-
   return (
-    <section className="SearchForm">
-      <form className="SearchForm__container" onSubmit={onFilter}>
-        <>
-          <MediaQuery minWidth={501}>
-            <div className="SearchForm__box">
-              <input
-                className="SearchForm__input"
-                placeholder="Введите название"
-                type="text"
-                name="text"
-                minLength="1"
-                required
-                value={ad || ""}
-                onChange={handleChangeProduct}
-              />
-              <button
-                type="submit"
-                className={`SearchForm__btn ${
-                  !ad.length ? "SearchForm__btn-disabled" : null
-                }`}
-              >
-                Найти
-              </button>
-            </div>
-            <div
-              className={`Form__input-hidden ${
-                validationErrors ? "Form__input-error" : ""
-              }`}
-            >
-              {validationErrors}
-            </div>
-          </MediaQuery>
-          <MediaQuery maxWidth={500}>
-            <input
-              className="SearchForm__input"
-              placeholder="Введите название"
-              type="text"
-              name="text"
-              value={ad}
-              minLength="1"
-              required
-              onChange={handleChangeProduct}
-            />
-            <div
-              className={`Form__input-hidden ${
-                validationErrors ? "Form__input-error" : ""
-              }`}
-            >
-              {validationErrors}
-            </div>
-            <button
-              type="submit"
-              className={`SearchForm__btn ${
-                !ad.length ? "SearchForm__btn-disabled" : null
-              }`}
-            >
-              Найти
-            </button>
-          </MediaQuery>
-        </>
-      </form>
-    </section>
+    <div className="searchForm searchForm__container">
+      <input
+        className="searchForm__input"
+        placeholder="Поиск"
+        type="text"
+        name="text"
+        value={ad}
+        minLength="1"
+        required
+        onChange={handleChangeProduct}
+      />
+      <div className={`input-hidden ${validationErrors ? "input-error" : ""}`}>
+        {validationErrors}
+      </div>
+    </div>
   );
 }
 

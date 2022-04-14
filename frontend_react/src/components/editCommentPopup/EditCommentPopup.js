@@ -2,20 +2,42 @@ import React, { useState } from "react";
 import UserForm from "../userForm/UserForm";
 import useFormValidation from "../../utils/hooks/useFormValidation";
 
-function EditCommentPopup({isOpen, onClose, getComment, id, editComment}) {
+function EditCommentPopup({
+  isOpen,
+  onClose,
+  getComm,
+  id,
+  commentUserId,
+  userId,
+  handleEdit,
+  commentId,
+  currentComId,
+}) {
   const [input, setInput] = useState("");
   const { values, handleChange, errors, isValid } = useFormValidation();
-
   function handleChangeInput(e) {
     handleChange(e);
     if (input.length > 0) {
       setInput("");
     }
   }
+  
+  function onEditComment(e) {
+    e.preventDefault();
+    handleEdit({
+      text: values.text,
+    });
+    onClose();
+    window.location.reload();
+  }
 
   return (
     <div
-      className={`popup editPopup ${isOpen ? "popup_is-opened" : ""}`}
+      className={`popup ${
+        isOpen && userId === commentUserId && commentId === currentComId
+          ? "popup_is-opened"
+          : ""
+      }`}
     >
       <div className="popup__container-comment">
         <button
@@ -24,7 +46,7 @@ function EditCommentPopup({isOpen, onClose, getComment, id, editComment}) {
         ></button>
         <UserForm
           id={id}
-          onSubmit={editComment}
+          onSubmit={onEditComment}
           title="Изменить"
           buttonText="Изменить"
           errors={!isValid}
@@ -36,7 +58,7 @@ function EditCommentPopup({isOpen, onClose, getComment, id, editComment}) {
               className="userForm__input"
               required
               value={values.text || ""}
-              placeholder={getComment.text}
+              placeholder={getComm.text}
               title="Название"
               name="text"
               type="text"
@@ -45,11 +67,11 @@ function EditCommentPopup({isOpen, onClose, getComment, id, editComment}) {
               onChange={handleChangeInput}
             />
             <div
-              className={`Form__input-hidden ${
-                errors.title ? "Form__input-error" : ""
+              className={`input-hidden ${
+                errors.text ? "input-error" : ""
               }`}
             >
-              {errors.title}
+              {errors.text}
             </div>
           </label>
         </UserForm>
@@ -57,5 +79,4 @@ function EditCommentPopup({isOpen, onClose, getComment, id, editComment}) {
     </div>
   );
 }
-
 export default EditCommentPopup;

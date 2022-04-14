@@ -1,19 +1,19 @@
-.Form {
+.form {
   @include formStyle();
 }
 
-.Form__head {
+.form__head {
   text-align: left;
   @media screen and (min-width: 320px) and (max-width: 460px) {
     text-align: center;
   }
 }
 
-.Form__title {
+.form__title {
   @include title();
 }
 
-.Form__container {
+.form__container {
   width: 100%;
   box-sizing: border-box;
   margin: 60px 0 20px;
@@ -22,7 +22,7 @@
   }
 }
 
-.Form__box {
+.form__box {
   @include flexColumn();
   box-sizing: border-box;
   padding: 0;
@@ -30,7 +30,7 @@
   width: 100%;
 }
 
-.Form__label {
+.form__label {
   margin: 0;
   padding: 0;
   text-align: left;
@@ -39,7 +39,7 @@
   }
 }
 
-.Form__description {
+.form__description {
   font-size: 0.7em;
   line-height: 12px;
   font-weight: 400;
@@ -48,7 +48,7 @@
   margin-bottom: 10px;
 }
 
-.Form__input {
+.form__input {
   width: 100%;
   border: none;
   background-color: #f9f9f9;
@@ -60,20 +60,7 @@
   color: #000;
 }
 
-.Form__input-hidden {
-  height: 26px;
-  padding: 4px 8px;
-  box-sizing: border-box;
-}
-
-.Form__input-error {
-  font-size: 0.62em;
-  line-height: 12px;
-  font-style: "Roboto";
-  color: #ff0000;
-}
-
-.Form__button {
+.form__button {
   width: inherit;
   padding: 13px 0 15px;
   text-align: center;
@@ -93,7 +80,7 @@
   }
 }
 
-.Form__button-text {
+.form__button-text {
   @include link();
   text-align: center;
   color: #fff;
@@ -103,7 +90,7 @@
   }
 }
 
-.Form__button_disabled {
+.form__button_disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.2;
@@ -111,7 +98,7 @@
   color: #c2c2c2;
 }
 
-.Form__route-container {
+.form__route-container {
   width: 100%;
   text-align: center;
   box-sizing: border-box;
@@ -121,7 +108,7 @@
   }
 }
 
-.Form__question {
+.form__question {
   font-size: 0.87em;
   line-height: 17px;
   font-weight: 400;
@@ -132,7 +119,7 @@
   }
 }
 
-.Form__link {
+.form__link {
   color: #f76343;
   text-decoration: none;
   &:hover {
@@ -140,7 +127,7 @@
   }
 }
 
-.Form__link_purple {
+.form__link_purple {
   color: #fff;
   text-decoration: none;
   padding: 3px;
@@ -149,20 +136,20 @@
     border-bottom: 2px solid #fff;
   }
 }
-.Form__error {
+.form__error {
   text-align: center;
   width: 100%;
   margin: 0 auto 20px;
 }
 
-.Form__text-error {
+.form__text-error {
   font-size: 0.687em;
   line-height: 13px;
   font-weight: 400;
   color: #ff004c;
 }
 
-.Form__margin {
+.form__margin {
   margin-top: 16px;
   margin-left: 4px;
 }

@@ -3,7 +3,6 @@ import MediaQuery from "react-responsive";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import Navigation from "../navigation/Navigation";
 import Button from "../button/Button";
 import asd from "../../images/tear-off-ads.png";
 import sandwich from "../../images/sandwich__icon.png";
@@ -31,8 +30,12 @@ function Header({ onOpen, logOut }) {
         <>
           <img className="header__img" src={asd} alt="asd icon" />
           <MediaQuery minWidth={1000}>
-            <Navigation user={user} />
-            <Button logOut={logOut} text="Выйти" className="button-link button-link__text"/>
+            <Button
+              logOut={logOut}
+              text="Выйти"
+              className="button-link button-link__text"
+              user={user}
+            />
           </MediaQuery>
           <MediaQuery maxWidth={999}>
             <img
@@ -49,7 +52,11 @@ function Header({ onOpen, logOut }) {
             <img className="header__img" src={asd} alt="asd icon" />
           </Link>
           <Link className="link" to="/sign-in">
-            <Button user={user} text="Войти" className="button-link button-link__text"/>
+            <Button
+              user={user}
+              text="Войти"
+              className="button-link button-link__text"
+            />
           </Link>
         </>
       )}

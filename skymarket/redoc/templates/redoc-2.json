@@ -9,7 +9,7 @@
   "schemes":[
     "http"
   ],
-  "basePath":"/",
+  "basePath":"/api/",
   "consumes":[
     "application/json"
   ],
@@ -29,7 +29,7 @@
     }
   ],
   "paths":{
-    "/ads/":{
+    "/api/ads/":{
       "get":{
         "operationId":"Список всех объявлений",
         "description":"",
@@ -108,7 +108,7 @@
 
       ]
     },
-    "/ads/me/":{
+    "/api/ads/me/":{
       "get":{
         "operationId":"Мои объявления",
         "description":"",
@@ -162,7 +162,7 @@
 
       ]
     },
-    "/ads/{ad_pk}/comments/":{
+    "/api/ads/{ad_pk}/comments/":{
       "get":{
         "operationId":"Список отзывов к объявлению",
         "description":"",
@@ -246,7 +246,7 @@
         }
       ]
     },
-    "/ads/{ad_pk}/comments/{id}/":{
+    "/api/ads/{ad_pk}/comments/{id}/":{
       "get":{
         "operationId":"Получить отзыв по ID",
         "description":"",
@@ -321,7 +321,7 @@
         }
       ]
     },
-    "/ads/{id}/":{
+    "/api/ads/{id}/":{
       "get":{
         "operationId":"Подробно об объявлении",
         "description":"",
@@ -390,7 +390,7 @@
         }
       ]
     },
-    "/refresh/":{
+    "/api/refresh/":{
       "post":{
         "operationId":"обновить токен",
         "description":"Takes a refresh type JSON web token and returns an access type JSON web\ntoken if the refresh token is valid.",
@@ -408,7 +408,7 @@
           "201":{
             "description":"",
             "schema":{
-              "$ref":"#/definitions/TokenRefresh"
+              "$ref":"#/definitions/TokenAccess"
             }
           }
         },
@@ -420,7 +420,7 @@
 
       ]
     },
-    "/token/":{
+    "/api/token/":{
       "post":{
         "operationId":"Получить токен",
         "description":"Takes a set of user credentials and returns an access and refresh JSON web\ntoken pair to prove the authentication of those credentials.",
@@ -438,7 +438,7 @@
           "201":{
             "description":"",
             "schema":{
-              "$ref":"#/definitions/TokenObtainPair"
+              "$ref":"#/definitions/TokenAccess"
             }
           }
         },
@@ -450,7 +450,7 @@
 
       ]
     },
-    "/users/":{
+    "/api/users/":{
       "get":{
         "operationId":"Список пользователей",
         "description":"",
@@ -529,7 +529,7 @@
 
       ]
     },
-    "/users/me/":{
+    "/api/users/me/":{
       "get":{
         "operationId":"Мой профиль",
         "description":"",
@@ -574,7 +574,7 @@
         ]
       }
     },
-    "/users/reset_password/":{
+    "/api/users/reset_password/":{
       "post":{
         "operationId":"Сброс пароля по email (не обязательно), djoser",
         "description":"",
@@ -604,7 +604,7 @@
 
       ]
     },
-    "/users/reset_password_confirm/":{
+    "/api/users/reset_password_confirm/":{
       "post":{
         "operationId":"Задать новый пароль по ссылке с почты, djoser",
         "description":"",
@@ -634,7 +634,7 @@
 
       ]
     },
-    "/users/set_password/":{
+    "/api/users/set_password/":{
       "post":{
         "operationId":"Изменить пароль",
         "description":"",
@@ -664,7 +664,7 @@
 
       ]
     },
-    "/users/{id}/":{
+    "/api/users/{id}/":{
       "get":{
         "operationId":"Профиль пользователя по ID",
         "description":"",
@@ -817,6 +817,13 @@
           "title":"Объявление",
           "description":"Добавьте объявление, которое относится к комментарию",
           "type":"integer"
+        },
+        "author_image":{
+          "title":"Аватарка",
+          "description":"Разместите фотографию пользователя",
+          "type":"string",
+          "x-nullable":true,
+          "format":"uri"
         }
       }
     },
@@ -911,13 +918,20 @@
       "properties":{
         "refresh":{
           "title":"Refresh",
-          "type":"string",
-          "minLength":1
+          "type":"string"
+        }
+      }
+    },
+    "TokenAccess":{
+      "type":"object",
+      "properties":{
+        "refresh":{
+          "title":"Refresh",
+          "type":"string"
         },
         "access":{
           "title":"Access",
-          "type":"string",
-          "readOnly":true
+          "type":"string"
         }
       }
     },
@@ -981,6 +995,13 @@
           "format":"email",
           "readOnly":true,
           "minLength":1
+        },
+        "image":{
+          "title":"Аватарка",
+          "description":"Разместите Вашу фотографию",
+          "type":"string",
+          "x-nullable":true,
+          "format":"uri"
         }
       }
     },
@@ -1027,6 +1048,13 @@
           "type":"string",
           "maxLength":128,
           "minLength":1
+        },
+        "image":{
+          "title":"Аватарка",
+          "description":"Разместите Вашу фотографию",
+          "type":"string",
+          "x-nullable":true,
+          "format":"uri"
         }
       }
     },
@@ -1053,6 +1081,13 @@
           "type":"string",
           "maxLength":128,
           "minLength":1
+        },
+        "image":{
+          "title":"Аватарка",
+          "description":"Разместите Вашу фотографию",
+          "type":"string",
+          "x-nullable":true,
+          "format":"uri"
         }
       }
     },

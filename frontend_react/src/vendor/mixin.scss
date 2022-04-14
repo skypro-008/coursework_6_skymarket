@@ -4,11 +4,6 @@
   justify-content: center;
 }
 
-@mixin flexRow {
-  display: flex;
-  flex-direction: row;
-}
-
 @mixin link {
   font-size: 1.125em;
   cursor: pointer;
@@ -18,15 +13,6 @@
   &:hover {
     opacity: 0.6;
   }
-}
-
-@mixin description {
-  font-size: 0.9em;
-  line-height: 16px;
-  letter-spacing: -0.04em;
-  font-weight: 400;
-  color: #a0a0a0;
-  font-family: "Roboto";
 }
 
 @mixin padding {
@@ -74,13 +60,12 @@
 @mixin input {
   width: 100%;
   border: none;
-  background-color: #f9f9f9;
   padding: 12px 8px;
   border-radius: 8px;
   font-size: 0.812em;
   line-height: 16px;
   font-weight: 400;
-  color: #000;
+  text-align: center;
 }
 
 @mixin inputTitle {
@@ -106,7 +91,7 @@
 }
 
 @mixin buttonSubmit {
-  padding: 12px 24px;
+  padding: 12px 20px;
   text-align: center;
   border: none;
   cursor: pointer;
@@ -126,7 +111,6 @@
   font-size: 1.5em;
   line-height: 29px;
   text-align: left;
-  font-family: "BebasNeue";
   margin: 0;
 }
 
