@@ -7,4 +7,3 @@ RUN npm i
 COPY . ./
 RUN ls -la
 CMD npm run build
-# CMD npm run start
