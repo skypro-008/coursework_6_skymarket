@@ -1,4 +1,4 @@
-.LinkForm {
+.linkForm {
   @include formStyle();
   padding: 0;
   justify-content: center;
@@ -11,31 +11,33 @@
   }
 }
 
-.LinkForm__form {
+.linkForm__form {
   @include flexColumn();
 }
 
-.LinkForm__label {
+.linkForm__label {
   @include label();
 }
 
-.LinkForm__subtitlte {
+.linkForm__subtitlte {
   @include inputTitle();
 }
 
-.LinkForm__input {
+.linkForm__input {
   @include input();
+  background-color: #f9f9f9;
+  color: #000;
 }
 
-.LinkForm__inputHidden {
+.linkForm__inputHidden {
   @include inputHidden();
 }
 
-.LinkForm__inputError {
+.linkForm__inputError {
   @include inputError();
 }
 
-.LinkForm__button {
+.linkForm__button {
   @include buttonSubmit();
   background: linear-gradient(
     330.53deg,
@@ -45,4 +47,8 @@
   );
   justify-content: flex-start;
   @include buttonText();
+}
+
+.linkForm__button-disabled {
+  @include buttonDisabled;
 }

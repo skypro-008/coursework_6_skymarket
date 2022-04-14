@@ -16,12 +16,12 @@
   opacity: 1;
 }
 
-.PopupNavigation__container {
+.popupNavigation__container {
   display: flex;
   flex-direction: column;
   width: 60%;
   height: 100%;
-  background-color: #1f1f47;
+  background-color: #39397F;
   box-sizing: border-box;
   padding-top: 28px;
   margin-left: 40%;
@@ -55,6 +55,6 @@
   }
 }
 
-.PopupNavigation__close-button {
+.popupNavigation__close-button {
   right: 6%;
 }

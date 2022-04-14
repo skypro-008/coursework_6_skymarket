@@ -1,4 +1,4 @@
-.Promo {
+.promo {
   @include flexColumn();
   width: 100%;
   align-items: flex-start;
@@ -12,13 +12,26 @@
   }
 }
 
-.Promo__title {
+.promo__box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.promo__title-box{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.promo__title {
   font-size: 2.5em;
   line-height: 60px;
   font-family: "BebasNeue";
 }
 
-.Promo__subtitle {
+.promo__subtitle {
   font-size: 1.12em;
   line-height: 24px;
   font-family: "Roboto";
@@ -30,7 +43,7 @@
   height: 60px;
   width: 100%;
   background-color: #6464b8;
-  margin: 80px auto 0;
+  //margin: 80px auto 0;
   display: flex;
   justify-content: center;
   align-items: center;

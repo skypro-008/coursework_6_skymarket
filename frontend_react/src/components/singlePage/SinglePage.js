@@ -1,136 +1,164 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import useAxios from "../../utils/useAxios";
 import AuthContext from "../../context/AuthContext";
 import MainContext from "../../context/MainContext";
 import CommentContainer from "../commentContainer/CommentContainer";
-import EditPopup from "../editAdPopup/EditAdPopup";
+import EditAdPopup from "../editAdPopup/EditAdPopup";
 import Buttons from "../buttons/Buttons";
+import Preloader from "../preloader/Preloader";
+import EditPhotoAdPopup from "../editPhotoPopup/EditPhotoPopup";
 
 function SinglePage() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [ad, setAd] = useState({});
   const [comments, setComments] = useState([]);
-  const api = useAxios();
   let ad_pk = id;
-  let { authTokens, user } = useContext(AuthContext);
-  const { isEditPopupOpen, closePopup, setAds, handleOpenEditPopup } =
-    useContext(MainContext);
+  let { user } = useContext(AuthContext);
+  const {
+    isEditPopupOpen,
+    isEditPhotoPopupOpen,
+    closePopup,
+    setAds,
+    handleOpenEditPopup,
+    handleOpenEditPhotoPopup,
+    getAd,
+    getComments,
+    setIsLoading,
+    isLoading,
+    deleteAdd,
+    addComment,
+    editAdd,
+    editAddPhoto,
+  } = useContext(MainContext);
   let history = useHistory();
 
   useEffect(() => {
-    setTimeout(() => {
-      Promise.all([getComments(), getProduct()]);
-    }, 700);
+    if (user) {
+      setIsLoading(true);
+      Promise.all([getComments(ad_pk), getAd(id)])
+        .then(([commentsData, adData]) => {
+          setComments(commentsData.data.results);
+          setAd(adData.data);
+        })
+        .catch((error) => console.log("error", error))
+        .finally(() => setTimeout(() => setIsLoading(false), 700));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const getProduct = async () => {
-    const response = await api.get(`/ads/${id}/`);
+  function handleEditAdd(data) {
+    debugger;
+    editAdd(id, data)
+      .then((data) => {
+        setAds((ads) => ads.filter((i) => (i.id === ad.pk ? data : null)));
+        window.location.reload();
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-    if (response.status === 200) {
-      setProduct(response.data);
-    }
-  };
+  function handleEditPhotoAdd(image) {
+    editAddPhoto(id, image)
+      .then((image) => {
+        setAds((ads) => ads.filter((i) => (i.id === ad.pk ? image : null)));
+        window.location.reload();
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-  const getComments = async () => {
-    const response = await api.get(`/ads/${ad_pk}/comments/`);
-
-    if (response.status === 200) {
-      setComments(response.data.results);
-    }
-  };
-
-  const deleteAdd = async (e) => {
+  function handleDeleteAdd(e) {
     e.preventDefault();
-    const response = await fetch(`http://127.0.0.1:8000/ads/${id}/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    });
-    if (response.status === 204) {
-      setAds((ads) => ads.filter((ad) => ad.id !== product.id));
-      history.push("/");
-    } else if (response.statusText === "Unauthorized") {
-      console.log("error!");
-    }
-  };
+    deleteAdd(id)
+      .then(() => {
+        setAds((ads) => ads.filter((i) => i.id !== ad.id));
+        history.push("/");
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-  const addComment = async (e) => {
-    let response = await fetch(`http://127.0.0.1:8000/ads/${id}/comments/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: JSON.stringify({
-        text: e.target.text.value,
-      }),
-    });
-    let newComment = await response.json();
+  function handleAddComment(data) {
+    addComment(id, data)
+      .then((newComment) => {
+        setComments([newComment, ...comments]);
+        window.location.reload();
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-    if (response.status === 201) {
-      setComments([newComment, ...comments]);
-      window.location.reload();
-    } else if (response.statusText === "Unauthorized") {
-      console.log("error!");
-    }
-  };
   return (
     <main className="cardInformation">
-      {product && (
-        <>
-          <h1 className="cardInformation__title">{product.title}</h1>
-          <div className="cardInformation__container">
-            {user.user_id !== product.author_id ? null : (
-              <Buttons
-                user={user}
-                product={product}
-                onOpen={handleOpenEditPopup}
-                className="buttons"
-                classButton="buttons-item"
-                onSubmit={deleteAdd}
-              />
-            )}
-            {product.image === null ? (
-              <div className="cardInformation__img-null" />
-            ) : (
-              <img
-                src={product.image}
-                className="cardInformation__img"
-                alt="product img"
-              />
-            )}
-            <div className="cardInformation__box">
-              <p className="cardInformation__price">{product.price} &#8381;</p>
-
-              <p className="cardInformation__description">
-                {product.description}
-              </p>
-            </div>
-            <div className="cardInformation__box box-2">
-              <div className="cardInformation__box_second">
-                <p className="cardInformation__tel">{product.phone}</p>
-                <p className="cardInformation__tel">
-                  {product.author_first_name}
-                </p>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        ad && (
+          <>
+            <h1 className="cardInformation__title">{ad.title}</h1>
+            <div className="cardInformation__container">
+              {ad.image === null ? (
+                <div className="cardInformation__img-null">
+                  {user.user_id === ad.author_id ? (
+                    <button
+                      onClick={handleOpenEditPhotoPopup}
+                      className="cardInformation__img-change"
+                      type="button"
+                    />
+                  ) : null}
+                </div>
+              ) : (
+                <div
+                  style={{ backgroundImage: `url(${ad.image})` }}
+                  className="cardInformation__img"
+                >
+                  {user.user_id === ad.author_id ? (
+                    <button
+                      onClick={handleOpenEditPhotoPopup}
+                      className="cardInformation__img-change"
+                      type="button"
+                    />
+                  ) : null}
+                </div>
+              )}
+              {user.user_id !== ad.author_id ? null : (
+                <Buttons
+                  user={user}
+                  product={ad}
+                  onOpen={handleOpenEditPopup}
+                  className="buttons"
+                  classButton="buttons-item"
+                  onSubmit={handleDeleteAdd}
+                />
+              )}
+              <div className="cardInformation__box">
+                <div className="cardInformation__box_second">
+                  <p className="cardInformation__tel">{ad.phone}</p>
+                  <p className="cardInformation__tel">{ad.author_first_name}</p>
+                </div>
+                <p className="cardInformation__price">{ad.price} &#8381;</p>
               </div>
+              <div className="cardInformation__box">
+                <p className="cardInformation__description">{ad.description}</p>
+              </div>
+              <CommentContainer
+                comments={comments}
+                addComment={handleAddComment}
+                setComments={setComments}
+                user={user}
+              />
             </div>
-            <CommentContainer
-              comments={comments}
-              addComment={addComment}
-              setComments={setComments}
-              user={user}
+            <EditAdPopup
+              isEditPopupOpen={isEditPopupOpen}
+              onClose={closePopup}
+              handleEditAdd={handleEditAdd}
+              id={id}
+              ad={ad}
             />
-          </div>
-          <EditPopup
-            isEditPopupOpen={isEditPopupOpen}
-            onClose={closePopup}
-            id={id}
-            product={product}
-          />
-        </>
+            <EditPhotoAdPopup
+              id={id}
+              handleEdit={handleEditPhotoAdd}
+              isOpen={isEditPhotoPopupOpen}
+              onClose={closePopup}
+            />
+          </>
+        )
       )}
     </main>
   );

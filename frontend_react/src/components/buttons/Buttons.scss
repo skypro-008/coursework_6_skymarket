@@ -1,31 +1,32 @@
 .buttons {
-    display: flex;
-    position: absolute;
-    justify-content: flex-end;
-    top: 12px;
-    right: 12px;
-    width: 100%;
-    z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0 0;
+  padding-right: 8px;
+  width: 100%;
 }
 
 .buttons-item {
-    width: 16px;
-    height: 16px;
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-    background-color: inherit;
-    border: none;
-    cursor: pointer;
-    &:hover{
-        opacity: 0.3;
-    }
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
 }
 
 .edit {
-    background-image: url(../../images/draw.png);
-    margin-right: 12px;
+  margin-right: 12px;
+  background-image: url(../../images/draw.png);
+}
+.delite {
+  background-image: url(../../images/close.png);
 }
 
-.delite {
-    background-image: url(../../images/close.png);
+.delite,
+.edit {
+  background-repeat: no-repeat;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.3;
+  }
 }

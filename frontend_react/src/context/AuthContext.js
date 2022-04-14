@@ -18,12 +18,13 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
+  const BASE_URL = "http://127.0.0.1:8000/api";
 
   const history = useHistory();
   //login
   let loginUser = async (e) => {
     e.preventDefault();
-    let response = await fetch("http://127.0.0.1:8000/token/", {
+    let response = await fetch(`${BASE_URL}/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   //registration
   const register = async (e) => {
     e.preventDefault();
-    let response = await fetch("http://127.0.0.1:8000/users/", {
+    let response = await fetch(`${BASE_URL}/users/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,6 +75,26 @@ export const AuthProvider = ({ children }) => {
       console.log(response.status);
     }
   };
+  //send link to the email
+  const sendLink = async (email) => {
+    return await fetch(`${BASE_URL}/users/reset_password/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email),
+    });
+  };
+  //change password
+  const changePassword = (data) => {
+    return fetch(`${BASE_URL}/users/reset_password_confirm/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };
 
   let contextData = {
     user: user,
@@ -82,6 +103,8 @@ export const AuthProvider = ({ children }) => {
     setUser: setUser,
     loginUser: loginUser,
     register: register,
+    sendLink: sendLink,
+    changePassword: changePassword,
   };
 
   useEffect(() => {

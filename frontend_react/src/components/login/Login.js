@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import AuthContext from "../../context/AuthContext"
+import AuthContext from "../../context/AuthContext";
 import Form from "../form/Form";
 import useFormValidation from "../../utils/hooks/useFormValidation";
 
 function Login(props) {
   const [input, setInput] = useState("");
   const { values, handleChange, errors, isValid } = useFormValidation();
-  let {loginUser} = useContext(AuthContext)
+  let { loginUser } = useContext(AuthContext);
 
   function handleChangeInput(e) {
     handleChange(e);
@@ -27,8 +27,8 @@ function Login(props) {
       errors={!isValid}
     >
       <>
-        <label className="Form__label">
-          <h2 className="Form__description">E-mail</h2>
+        <label className="form__label">
+          <h2 className="form__description">E-mail</h2>
           <input
             required
             name="email"
@@ -36,19 +36,19 @@ function Login(props) {
             value={values.email || ""}
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
             autoComplete="on"
-            className="Form__email Form__input"
+            className="form__email form__input"
             onChange={handleChangeInput}
           />
           <div
-            className={`Form__input-hidden ${
-              errors.email ? "Form__input-error" : ""
+            className={`input-hidden ${
+              errors.email ? "input-error" : ""
             }`}
           >
             {errors.email}
           </div>
         </label>
-        <label className="Form__label">
-          <h2 className="Form__description">Пароль</h2>
+        <label className="form__label">
+          <h2 className="form__description">Пароль</h2>
           <input
             required
             value={values.password || ""}
@@ -56,12 +56,12 @@ function Login(props) {
             type="password"
             minLength="1"
             autoComplete="on"
-            className="Form__password Form__input"
+            className="form__password form__input"
             onChange={handleChangeInput}
           />
           <div
-            className={`Form__input-hidden ${
-              errors.password ? "Form__input-error" : ""
+            className={`input-hidden ${
+              errors.password ? "input-error" : ""
             }`}
           >
             {errors.password}

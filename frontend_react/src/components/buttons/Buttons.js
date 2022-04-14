@@ -1,6 +1,6 @@
 import React from "react";
 
-function Buttons({ onOpen, className, classButton, onSubmit }) {
+function Buttons({ onOpen, className, classButton, onSubmit}) {
   return (
     <div className={className}>
         <button

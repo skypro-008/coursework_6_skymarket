@@ -3,7 +3,6 @@ import MediaQuery from "react-responsive";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import Navigation from "../navigation/Navigation";
 import Button from "../button/Button";
 import asd from "../../images/tear-off-ads.png";
 import sandwich from "../../images/sandwich__icon.png";

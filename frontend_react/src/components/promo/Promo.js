@@ -1,28 +1,28 @@
 import React from "react";
-import { Link as NavLink } from "react-router-dom";
+import MediaQuery from "react-responsive";
+import SearchForm from "../searchForm/SearchForm";
+import PaginationComponent from "../paginationComponent/PaginationComponent";
 
-function Promo({Pagination, PaginationItem, pageQty, page, setPage}) {
+function Promo({ pageQty, ad, setAd, user, setPage, page }) {
   return (
-    <section className="Promo">
-      <h2 className="Promo__title">ADS-ONLINE</h2>
-      <p className="Promo__subtitle">Лучшая платформа для продажи вещей</p>
-      <div className="border">
-        <Pagination
-          count={pageQty}
-          page={page}
-          onChange={(_, num) => setPage(num)}
-          showFirstButton
-          showLastButton
-          sx={{ marginY: 3, marginX: "auto", color: "white" }}
-          renderItem={(item) => (
-            <PaginationItem
-              component={NavLink}
-              to={`/?page=${item.page}`}
-              {...item}
-            />
-          )}
-        />
-      </div>
+    <section className="promo">
+      <MediaQuery minWidth={801}>
+        <div className="promo__box">
+          <div className="promo__title-box">
+            <h2 className="promo__title">ADS-ONLINE</h2>
+            <p className="promo__subtitle">
+              Лучшая платформа для продажи вещей
+            </p>
+          </div>
+          <SearchForm ad={ad} setAd={setAd} user={user} page={page} />
+        </div>
+      </MediaQuery>
+      <MediaQuery maxWidth={800}>
+        <h2 className="promo__title">ADS-ONLINE</h2>
+        <p className="promo__subtitle">Лучшая платформа для продажи вещей</p>
+        <SearchForm ad={ad} setAd={setAd} user={user} page={page} />
+      </MediaQuery>
+      <PaginationComponent pageQty={pageQty} setPage={setPage} page={page} />
     </section>
   );
 }

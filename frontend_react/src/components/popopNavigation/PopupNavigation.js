@@ -5,14 +5,14 @@ import Button from "../button/Button";
 function PopupNavigation(props) {
   return (
     <div
-      className={`PopupNavigation popup ${
+      className={`popupNavigation popup ${
         props.isOpen ? "popup_is-opened" : ""
       }`}
     >
-      <div className="PopupNavigation__container">
+      <div className="popupNavigation__container">
         <button
           onClick={props.onClose}
-          className="PopupNavigation__close-button close-button"
+          className="popupNavigation__close-button close-button"
         ></button>
         <Navigation onClose={props.onClose}/>
         <Button onClose={props.onClose} logOut={props.logOut} className="button button__text" text="Выйти"/>
