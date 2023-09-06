@@ -99,7 +99,7 @@ DJOSER = {
 # TODO здесь необходимо настроить подключение к БД
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DB_ENGINE'),
         'NAME': os.getenv('DB_NAME'), # Название БД
         'USER': os.getenv('DB_USER'), # Пользователь для подключения
         'PASSWORD': os.getenv('DB_PASSWORD'), # Пароль для этого пользователя
