@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "rest_framework",
+
     "users",
     "ads",
     "redoc",
@@ -82,6 +84,10 @@ WSGI_APPLICATION = "skymarket.wsgi.application"
 
 # TODO здесь мы настраиваем аутентификацию и пагинацию
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+
+    ),
 }
 # TODO здесь мы настраиваем Djoser
 DJOSER = {
@@ -92,6 +98,13 @@ DJOSER = {
 
 # TODO здесь необходимо настроить подключение к БД
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'), # Название БД
+        'USER': os.getenv('DB_USER'), # Пользователь для подключения
+        'PASSWORD': os.getenv('DB_PASSWORD'), # Пароль для этого пользователя
+    }
+
 }
 
 
