@@ -31,7 +31,7 @@ class Ad(models.Model):
 class Comment(models.Model):
     # TODO добавьте поля модели здесь
     text = models.CharField(verbose_name='текст', max_length=1000, default="")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='Автор')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='автор')
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE,  null=True, verbose_name='объявление')
     created_at = models.DateTimeField(verbose_name='время создания', default=timezone.now)
 
