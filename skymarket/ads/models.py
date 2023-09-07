@@ -30,4 +30,14 @@ class Ad(models.Model):
 
 class Comment(models.Model):
     # TODO добавьте поля модели здесь
-    pass
+    text = models.CharField(verbose_name='текст', max_length=1000, default="")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='Автор')
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE,  null=True, verbose_name='объявление')
+    created_at = models.DateTimeField(verbose_name='время создания', default=timezone.now)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
