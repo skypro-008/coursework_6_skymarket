@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import get_object_or_404
 
 from .filters import AdsFilter
 from .models import Ad, Comment
@@ -19,7 +19,21 @@ class AdViewSet(viewsets.ModelViewSet):
     filterset_class = AdsFilter    #Набор полей для фильтрации
     pagination_class = AdPagination  # Используем PageNumberPagination
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
-    #serializer_class = CommentSerializer
+    serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        ad_id = self.kwargs.get('ad_pk')
+        ad = get_object_or_404(Ad, id=ad_id)
+        serializer.save(author=user, ad=ad)
+
+    def get_queryset(self):
+        ad_id = self.kwargs.get('ad_pk')
+        ad = get_object_or_404(Ad, id=ad_id)
+        return ad.comments.all()

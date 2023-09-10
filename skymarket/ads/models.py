@@ -16,7 +16,7 @@ class Ad(models.Model):
     price = models.PositiveIntegerField(verbose_name='цена', **NULLABLE)
     description = models.TextField(verbose_name='описание', blank=True)
     image = models.ImageField(verbose_name='изображение', upload_to='ads', blank=True, null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='автор', related_name='ads', default=1)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='автор', related_name='ads')
     created_at = models.DateTimeField(verbose_name='время создания', default=timezone.now)
 
     def __str__(self):
