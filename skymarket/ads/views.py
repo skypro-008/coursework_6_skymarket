@@ -8,11 +8,17 @@ from .serializers import AdSerializer, CommentSerializer
 
 
 class AdPagination(pagination.PageNumberPagination):
+    """
+    Пагинация
+    """
     page_size = 4
 
 
 # TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
 class AdViewSet(viewsets.ModelViewSet):
+    """
+    Объявления
+    """
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
     filter_backends = (DjangoFilterBackend,)   #Бэкенд для обработки фильтра
@@ -20,12 +26,14 @@ class AdViewSet(viewsets.ModelViewSet):
     pagination_class = AdPagination  # Используем PageNumberPagination
     permission_classes = [CustomPermission]
 
-
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    Комментарии
+    """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [CustomPermission]

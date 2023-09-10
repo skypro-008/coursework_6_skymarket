@@ -4,10 +4,9 @@ from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .apps import UsersConfig
 
+
 # TODO подключите UserViewSet из Djoser.views к нашим urls.py
 # TODO для этокого рекоммендуется использовать SimpleRouter
-
-
 app_name = UsersConfig.name
 
 users_router = SimpleRouter()

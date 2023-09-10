@@ -1,5 +1,4 @@
 from django.utils import timezone
-
 from django.conf import settings
 from django.db import models
 
@@ -12,6 +11,9 @@ NULLABLE = {'blank': True, 'null': True}
 
 class Ad(models.Model):
     # TODO добавьте поля модели здесь
+    """
+    Модель объявления
+    """
     title = models.CharField(verbose_name='название', max_length=200, default= " ")
     price = models.PositiveIntegerField(verbose_name='цена', **NULLABLE)
     description = models.TextField(verbose_name='описание', blank=True)
@@ -30,6 +32,9 @@ class Ad(models.Model):
 
 class Comment(models.Model):
     # TODO добавьте поля модели здесь
+    """
+    Модель комментарии
+    """
     text = models.CharField(verbose_name='текст', max_length=1000, default="")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='автор')
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE,  null=True, verbose_name='объявление')
