@@ -123,6 +123,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'), # Название БД
         'USER': os.getenv('DB_USER'), # Пользователь для подключения
         'PASSWORD': os.getenv('DB_PASSWORD'), # Пароль для этого пользователя
+        'HOST': 'db',  #os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT')
     }
 
 }
