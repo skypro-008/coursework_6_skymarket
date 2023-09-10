@@ -1,9 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets
 from rest_framework.generics import get_object_or_404
-
 from .filters import AdsFilter
 from .models import Ad, Comment
+from .permissions import CustomPermission
 from .serializers import AdSerializer, CommentSerializer
 
 
@@ -18,6 +18,8 @@ class AdViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)   #Бэкенд для обработки фильтра
     filterset_class = AdsFilter    #Набор полей для фильтрации
     pagination_class = AdPagination  # Используем PageNumberPagination
+    permission_classes = [CustomPermission]
+
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -26,6 +28,7 @@ class AdViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [CustomPermission]
 
     def perform_create(self, serializer):
         user = self.request.user
