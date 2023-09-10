@@ -36,4 +36,4 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         ad_id = self.kwargs.get('ad_pk')
         ad = get_object_or_404(Ad, id=ad_id)
-        return ad.comments.all()
+        return Comment.objects.filter(ad=ad)
