@@ -11,7 +11,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ["text", "created_at", "author_first_name", "author_last_name", "author_image"]
+        fields = ['id', "text", "created_at", "author_first_name", "author_last_name", "author_image"]
 
 
 class AdSerializer(serializers.ModelSerializer):
