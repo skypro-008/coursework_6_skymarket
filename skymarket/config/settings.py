@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     'djoser',
+    'django_filters',
 
     "users",
     "ads",

@@ -1,4 +1,7 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets
+
+from .filters import AdsFilter
 from .models import Ad, Comment
 from .serializers import AdSerializer, CommentSerializer
 
@@ -11,6 +14,8 @@ class AdPagination(pagination.PageNumberPagination):
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
+    filter_backends = (DjangoFilterBackend,)   #Бэкенд для обработки фильтра
+    filterset_class = AdsFilter    #Набор полей для фильтрации
 
 
 class CommentViewSet(viewsets.ModelViewSet):
