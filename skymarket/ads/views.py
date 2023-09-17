@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .filters import AdsFilter
 from .models import Ad, Comment
-from .permissions import CustomPermission
+from .permissions import CustomPermission, CommentsCustomPermission
 from .serializers import AdSerializer, CommentSerializer, AdDetailSerializer
 
 
@@ -57,7 +57,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [CustomPermission]
+    permission_classes = [CommentsCustomPermission]
 
     def perform_create(self, serializer):
         user = self.request.user
