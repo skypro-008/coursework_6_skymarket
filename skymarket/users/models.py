@@ -6,14 +6,11 @@ from django.utils.translation import gettext_lazy as _
 
 NULLABLE = {'blank': True, 'null': True}
 
-class UserRoles:
-    # TODO закончите enum-класс для пользователя
-    pass
-
 
 class User(AbstractBaseUser):
-    # TODO переопределение пользователя.
-    # TODO подробности также можно поискать в рекоммендациях к проекту
+    """
+    Модель пользователя
+    """
     ROLE_CHOICES = (
         ('user', 'пользователь'),
         ('admin', 'администратор'),

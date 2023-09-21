@@ -7,7 +7,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
-# TODO здесь необходимо подклюючит нужные нам urls к проекту
 schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",

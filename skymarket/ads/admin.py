@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import Ad, Comment
 
-# TODO здесь можно подкючить ваши модели к стандартной джанго-админке
+
 @admin.register(Ad)
 class AdAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'author', 'created_at')    #Поля, которые вы хотите отображать в списке объявлений

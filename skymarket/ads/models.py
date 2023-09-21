@@ -10,7 +10,6 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Ad(models.Model):
-    # TODO добавьте поля модели здесь
     """
     Модель объявления
     """
@@ -31,7 +30,6 @@ class Ad(models.Model):
 
 
 class Comment(models.Model):
-    # TODO добавьте поля модели здесь
     """
     Модель комментарии
     """

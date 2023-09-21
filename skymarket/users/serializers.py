@@ -4,9 +4,11 @@ from django.contrib.auth import get_user_model
 
 
 User = get_user_model()
-# TODO Здесь нам придется переопределить сериалайзер, который использует djoser
-# TODO для создания пользователя из за того, что у нас имеются нестандартные поля
+
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
+    """
+    Сериализатор для регистрации пользователя
+    """
     password = serializers.CharField(required=True)
 
     class Meta:
@@ -15,6 +17,9 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
+    """
+    Сериализация данных пользователя
+    """
     class Meta:
         model = User
-        fields = ["email", "password", "first_name", "last_name", "phone"]
+        fields = ["email", "first_name", "last_name", "phone"]

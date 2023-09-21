@@ -3,7 +3,6 @@ from rest_framework_nested import routers
 from .apps import SalesConfig
 from .views import AdViewSet, CommentViewSet
 
-# TODO настройка роутов для модели
 
 app_name= SalesConfig.name
 

@@ -14,9 +14,10 @@ class AdPagination(pagination.PageNumberPagination):
     Пагинация
     """
     page_size = 4
+    max_page_size = None
+    page_size_query_param = None
 
 
-# TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
 class AdViewSet(viewsets.ModelViewSet):
     """
     Объявления
@@ -42,12 +43,21 @@ class AdViewSet(viewsets.ModelViewSet):
     default_permissions = [AllowAny()]
 
     def get_serializer_class(self):
+        """
+        Используется для определения класса сериализатора
+        """
         return self.serializers.get(self.action, self.default_serializer)
 
     def get_permissions(self):
+        """
+        Используется для определения прав доступа
+        """
         return self.permissions.get(self.action, self.default_permissions)
 
     def perform_create(self, serializer):
+        """
+        Сохраняем объект объявления в базе данных с автором, который является текущим пользователем, отправившим запрос.
+        """
         serializer.save(author=self.request.user)
 
 
@@ -60,12 +70,18 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [CommentsCustomPermission]
 
     def perform_create(self, serializer):
+        """
+        Сохраняем объект комментария в базе данных с автором, который является текущим пользователем, отправившим запрос.
+        """
         user = self.request.user
         ad_id = self.kwargs.get('ad_pk')
         ad = get_object_or_404(Ad, id=ad_id)
         serializer.save(author=user, ad=ad)
 
     def get_queryset(self):
+        """
+        Возвращаем список комментариев, привязанных к определенному объявлению
+        """
         ad_id = self.kwargs.get('ad_pk')
         ad = get_object_or_404(Ad, id=ad_id)
         return Comment.objects.filter(ad=ad)
