@@ -85,3 +85,17 @@ class CommentViewSet(viewsets.ModelViewSet):
         ad_id = self.kwargs.get('ad_pk')
         ad = get_object_or_404(Ad, id=ad_id)
         return Comment.objects.filter(ad=ad)
+
+
+class UserAdsViewSet(viewsets.ModelViewSet):
+    """
+    Мои объявления
+    """
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    pagination_class = AdPagination
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Фильтруем объявления по текущему пользователю
+        return Ad.objects.filter(author=self.request.user)
