@@ -2,14 +2,24 @@ from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSeria
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
-# TODO Здесь нам придется переопределить сериалайзер, который использует djoser
-# TODO для создания пользователя из за того, что у нас имеются нестандартные поля
 
+User = get_user_model()
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
-    pass
+    """
+    Сериализатор для регистрации пользователя
+    """
+    password = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["email", "password", "first_name", "last_name", "phone"]
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
-    pass
+    """
+    Сериализация данных пользователя
+    """
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name", "phone"]
