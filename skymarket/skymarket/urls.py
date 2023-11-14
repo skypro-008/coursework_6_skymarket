@@ -28,7 +28,9 @@ urlpatterns = [
     path("api/admin/", admin.site.urls),
     path("api/redoc-tasks/", include("redoc.urls")),
 
+    # Applications
     path('api/users/', include('users.urls')),
+    path('api/', include('ads.urls')),
 
     # Authorise Tokens
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

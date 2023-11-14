@@ -79,17 +79,3 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(ad=self.kwargs['ad_pk']).select_related("author")
-
-# ----------------------------------------------------------------
-
-
-class UserAdsListView(ListAPIView):
-    '''Ad generics Объявления пользователя'''
-    queryset = Ad.objects.all()
-    serializer_class = AdSerializer
-    permission_classes = [IsAuthenticated]
-
-    def list(self, request, *args, **kwargs):
-        '''Фильтрация по автору объявления'''
-        self.queryset = self.queryset.filter(author=request.user)
-        return super().list(request, *args, **kwargs)
