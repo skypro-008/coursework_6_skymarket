@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  # database POSTGRES
+  db:
+    image: postgres
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_DB: skymarket
+      POSTGRES_USER: $USER_POSTGRES
+      POSTGRES_PASSWORD: $PASSWORD_POSTGRES
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+    volumes:
+      - pg_data:/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # OUR APP
+  app:
+    build: .
+    env_file:
+      - .env
+    tty: true
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./skymarket/config:/opt/app/skymarket
+      - ./skymarket/users:/opt/app/users
+      - ./skymarket/ads:/opt/app/ads
+      - ./skymarket/redoc:/opt/app/redoc
+    depends_on:
+      - db:
+          condition: service_healthy
+
+  # FRONTEND
+  frontend:
+    build: ./frontend_react/.
+    volumes:
+      - frontend:/app/build
+    depends_on:
+      - db
+
+
+volumes:
+  pg_data:
+  frontend:
