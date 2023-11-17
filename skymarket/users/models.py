@@ -14,7 +14,7 @@ class UserRoles(models.TextChoices):
     ADMIN = 'admin'
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     # TODO переопределение пользователя.
     # TODO подробности также можно поискать в рекоммендациях к проекту
     USERNAME_FIELD = 'email'
