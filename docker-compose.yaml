@@ -4,13 +4,14 @@ services:
   # database POSTGRES
   db:
     image: postgres
+    container_name: db
     env_file:
       - .env
 
     environment:
       POSTGRES_DB: skymarket
-      POSTGRES_USER: $USER_POSTGRES
-      POSTGRES_PASSWORD: $PASSWORD_POSTGRES
+      POSTGRES_USER: $(USER_POSTGRES)
+      POSTGRES_PASSWORD: $(PASSWORD_POSTGRES)
       PGDATA: /var/lib/postgresql/data/pgdata
 
     volumes:
