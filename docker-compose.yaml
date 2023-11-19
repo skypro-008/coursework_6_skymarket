@@ -5,8 +5,7 @@ services:
   db:
     image: postgres
     container_name: db
-    env_file:
-      - .env
+    env_file: .env
 
     environment:
       POSTGRES_DB: skymarket
@@ -28,30 +27,22 @@ services:
   # OUR APP
   app:
     build: .
-    env_file:
-      - .env
+    env_file: .env
     tty: true
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
+
     volumes:
-      - ./skymarket/config:/opt/app/skymarket
+      - ./skymarket/skymarket:/opt/app/skymarket
       - ./skymarket/users:/opt/app/users
       - ./skymarket/ads:/opt/app/ads
       - ./skymarket/redoc:/opt/app/redoc
-    depends_on:
-      - db:
-          condition: service_healthy
 
-  # FRONTEND
-  frontend:
-    build: ./frontend_react/.
-    volumes:
-      - frontend:/app/build
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 
 volumes:
   pg_data:
-  frontend:
