@@ -12,5 +12,6 @@ users_router = SimpleRouter()
 users_router.register('', UserViewSet, basename='users')
 
 urlpatterns = [
+    # Users
     path('', include(users_router.urls)),
 ]
