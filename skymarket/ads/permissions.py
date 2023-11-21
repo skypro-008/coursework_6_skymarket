@@ -4,7 +4,10 @@ from users.models import UserRoles
 
 
 class IsAdmin(BasePermission):
-    '''Доступ только для авторизированных пользователей с ролью ADMIN'''
+    '''
+    Доступ к просмотру для авторизированных пользователей с ролью ADMIN.
+    Доступ ADMIN-ов ко всем объектам.
+    '''
 
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
@@ -14,7 +17,10 @@ class IsAdmin(BasePermission):
 
 
 class IsOwner(BasePermission):
-    '''Достип авторизированного пользователя к своему объявлению'''
+    '''
+    Доступ к просмотру для авторизированных пользователей с ролью USER.
+    Доступ USER-а только к своему объекту (изменять чужие объекты нельзя).
+    '''
 
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
