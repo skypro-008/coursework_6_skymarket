@@ -123,11 +123,11 @@ DJOSER = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'skymarket',
+        'NAME': os.getenv('DB_POSTGRES'),
         'USER': os.getenv('USER_POSTGRES'),
         'PASSWORD': os.getenv('PASSWORD_POSTGRES'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
