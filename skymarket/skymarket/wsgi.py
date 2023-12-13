@@ -1,5 +1,5 @@
 """
-WSGI config for skymarket project.
+WSGI config for django_files project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

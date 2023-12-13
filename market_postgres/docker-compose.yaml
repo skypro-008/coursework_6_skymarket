@@ -6,9 +6,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: skymarket
-      POSTGRES_PASSWORD: skymarket
-      POSTGRES_DB: skymarket
+      POSTGRES_USER: django_files
+      POSTGRES_PASSWORD: django_files
+      POSTGRES_DB: django_files
     restart: always
     ports:
     - "5432:5432"
@@ -26,8 +26,8 @@ services:
       - "8000:8000"
       - "3000:3000"
     volumes:
-      - ../skymarket/django_static/:/usr/share/nginx/html/django_static/
-      - ../skymarket/django_media/:/usr/share/nginx/html/django_media/
+      - ../django_files/django_static/:/usr/share/nginx/html/django_static/
+      - ../django_files/django_media/:/usr/share/nginx/html/django_media/
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - frontend:/usr/share/nginx/html/
     restart: always
