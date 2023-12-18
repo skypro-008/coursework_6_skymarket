@@ -1,56 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 
-from django.contrib.auth.models import BaseUserManager
+from .managers import UserManager, UserRole
 
 NULLABLE = {'null': True, 'blank': True}
-
-
-class UserManager(BaseUserManager):
-    """
-    функция создания пользователя — в нее мы передаем обязательные поля
-    """
-
-    def create_user(self, email, first_name, last_name, phone, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            role="user"
-        )
-        user.is_active = True
-        user.set_password(password)
-        user.save(using=self._db)
-
-        return user
-
-    def create_superuser(self, email, first_name, last_name, phone, password=None):
-        """
-        функция для создания суперпользователя — с ее помощью мы создаем админинстратора
-        это можно сделать с помощью команды createsuperuser
-        """
-
-        user = self.create_user(
-            email,
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
-            password=password,
-            role="admin"
-        )
-
-        user.save(using=self._db)
-        return user
-
-
-class UserRole:
-    choices = (
-        ('users', 'юзер'),
-        ('admin', 'админ')
-    )
 
 
 class User(AbstractBaseUser):
@@ -62,8 +15,8 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=100, verbose_name='пароль')
     phone = models.CharField(max_length=50, unique=True, verbose_name='номер телефона')
     image = models.ImageField(upload_to='user', null=True, blank=True, verbose_name='аватар')
-    role = models.CharField(max_length=10, choices=UserRole.choices, default=UserRole.choices[0])
-
+    role = models.CharField(max_length=30, choices=UserRole.choices, default=UserRole.USER, verbose_name='Роль')
+    is_active = models.BooleanField(default=True)
     USERNAME_FIELD = 'email'
 
     # эта константа содержит список с полями,
@@ -74,3 +27,32 @@ class User(AbstractBaseUser):
     # переопределить менеджер модели пользователя
 
     objects = UserManager()
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    @property
+    def is_admin(self):
+        return self.role == UserRole.ADMIN
+
+    @property
+    def is_user(self):
+        return self.role == UserRole.USER
+
+    @property
+    def is_superuser(self):
+        return self.is_admin
+
+    @property
+    def is_staff(self):
+        return self.is_admin
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"

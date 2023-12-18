@@ -2,10 +2,15 @@ from django.urls import include, path
 from djoser.views import UserViewSet
 from rest_framework.routers import SimpleRouter
 
-users_router = SimpleRouter()
+from .apps import UsersConfig
 
-users_router.register("users", UserViewSet, basename="users")
+
+app_name = UsersConfig.name
+
+users_router = SimpleRouter()
+users_router.register('', UserViewSet, basename='users')
 
 urlpatterns = [
-    path("", include(users_router.urls)),
+    # Users
+    path('', include(users_router.urls)),
 ]
