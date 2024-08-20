@@ -1,15 +1,14 @@
-from django.contrib.auth.tokens import default_token_generator
 from templated_mail.mail import BaseEmailMessage
 
 
-from djoser import utils
-from djoser.conf import settings
+class DomainOverride:
+    frontend_domain = '127.0.0.1:3000'
 
-# TODO Задание со звездочкой. Здесь необходимо переместиться в исходный код
-# TODO Djoser и правильно переопределит адрес сервера (в нашем случае это localhost:3000)
-class PasswordResetEmail(BaseEmailMessage):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['domain'] = self.frontend_domain
+        return context
+
+
+class PasswordResetEmail(DomainOverride, BaseEmailMessage):
     template_name = "email/password_reset.html"
-
-    def get_context_data(self):
-        # PasswordResetEmail can be deleted
-        pass
